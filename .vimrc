@@ -6,13 +6,16 @@ if has("gui_running")
 endif
 
 "---Display Setting
-set number "行番号を表示する
+set relativenumber "行番号を表示する
 set title "編集中のファイル名を表示
 set showmatch "括弧入力時の対応する括弧を表示
-set smartindent "オートインデント
+"set smartindent "オートインデント
+set autoindent
 set tabstop=4
 set shiftwidth=4
 set softtabstop=0
+set noerrorbells
+set visualbell t_vb=
 filetype plugin indent on
 syntax enable
 
@@ -47,6 +50,8 @@ NeoBundle 'basyura/bitly.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'miyakogi/seiya.vim'
+"BundleLazy 'ervandew/eclim', {'build': {'mac': 'ant -Declipse.home=/opt/homebrew-cask/Caskroom/eclipse-java/4.4.0/eclipse -Dvim.files='.escape(expand('~/.bundle/eclim'), '')}}
 "NeoBundle 'TwitVim'
 
 call neobundle#end()
@@ -82,6 +87,9 @@ endif
 let g:tweetvim_display_icon = 1
 let g:tweetvim_tweet_per_page = 40
 
+"---seiya
+let g:seiya_auto_enable = 1
+
 
 "---keyMapping
 let mapleader = "\<Space>"
@@ -89,6 +97,8 @@ inoremap <C-j> <Esc>
 
 nnoremap : ;
 nnoremap ; :
+nnoremap <C-h> ^
+nnoremap <C-l> $
 
 " Plugin key-mappings.
 " Neocomplete
@@ -114,5 +124,8 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 nnoremap <leader>tl :TweetVimHomeTimeline<CR>
 nnoremap <leader>tp :TweetVimCommandSay<CR>
 
-
+augroup PrevimSettings
+	autocmd!
+	autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+augroup END
 
